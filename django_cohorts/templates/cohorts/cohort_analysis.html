@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="/admin">Home</a> &rsaquo; Cohort Analysis</div>{% endblock %}
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Cohort</th>
+            <th>Count</th>
+            {% for set in analysis.date_range_set %}
+            <th>Week {{ forloop.counter }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for cohort in cohorts %}
+        <tr class="{% cycle "row1" "row2" %}">
+            <th scope="row">
+                <b>{{ cohort.name|date }}</b>
+            </th>
+            <th>{{ cohort.analyze.count }}</th>
+            {% for data in cohort.analyze.analysis %}
+            <td>{{ data|floatformat }}%</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
